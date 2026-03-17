@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
-import { X, Calendar, Clock, Users, AlertCircle, ExternalLink } from 'lucide-react'
+import { X, Calendar, Clock, Users, AlertCircle, ExternalLink, Plus } from 'lucide-react'
 export default function CreateClassModal({ onClose, onClassCreated }) {
   const [loading, setLoading] = useState(false)
   const { register, handleSubmit, formState: { errors }, reset, watch } = useForm()
@@ -194,26 +194,44 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              <ExternalLink className="h-4 w-4 inline mr-1" />
-              Custom Meeting Link (Optional)
-            </label>
+            <div className="flex justify-between items-center mb-1">
+              <label className="block text-sm font-medium text-gray-700">
+                <ExternalLink className="h-4 w-4 inline mr-1" />
+                Google Meet Link *
+              </label>
+              <button
+                type="button"
+                onClick={() => window.open('https://meet.google.com/new', '_blank')}
+                className="text-xs text-primary-600 hover:text-primary-700 font-medium flex items-center"
+              >
+                <Plus className="h-3 w-3 mr-1" />
+                Get a real link
+              </button>
+            </div>
             <input
               type="url"
-              {...register('customMeetLink')}
+              {...register('customMeetLink', { required: 'A working meeting link is required' })}
               className="input-field"
               placeholder="https://meet.google.com/xxx-xxxx-xxx"
             />
             <p className="text-xs text-gray-500 mt-1">
-              Leave blank to generate a shared link automatically.
+              Paste a real link here so students can join. Click "Get a real link" to create one.
             </p>
+            {errors.customMeetLink && (
+              <p className="text-red-500 text-sm mt-1 flex items-center">
+                <AlertCircle className="h-4 w-4 mr-1" />
+                {errors.customMeetLink.message}
+              </p>
+            )}
           </div>
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
             <div className="flex items-start">
-              <Clock className="h-5 w-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" />
+              <div className="h-5 w-5 bg-blue-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
+                <div className="h-2.5 w-2.5 bg-blue-600 rounded-full"></div>
+              </div>
               <div className="text-sm text-blue-800">
-                <p className="font-medium mb-1">Instant Google Meet Link</p>
-                <p>A professional Google Meet link will be generated instantly for your class, accessible by all your students.</p>
+                <p className="font-medium mb-1">Shared Link Strategy</p>
+                <p>Since we prioritize security and avoid "Unverified App" warnings, please provide a real Google Meet link. Everyone joins the same session instantly!</p>
               </div>
             </div>
           </div>
