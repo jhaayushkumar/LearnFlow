@@ -20,7 +20,7 @@ export default function MentorDashboard() {
       return
     }
     if (session.user.role === 'mentor') {
-      toast.success('Logged in as Mentor', { id: 'mentor-welcome' })
+      toast.success('Logged in as Mentor', { id: 'mentor-welcome', icon: null })
     } else {
       router.push('/learner/dashboard')
       return

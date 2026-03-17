@@ -28,7 +28,7 @@ export default function RoleSelectionModal({ isOpen, onClose }) {
       
       if (data.success) {
         await update({ role })
-        toast.success(`Welcome to LearnFlow, ${role}!`)
+        toast.success(`Welcome to LearnFlow, ${role}!`, { icon: null })
         if (role === 'mentor') {
           router.push('/mentor/dashboard')
         } else {

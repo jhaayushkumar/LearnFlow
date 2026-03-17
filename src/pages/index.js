@@ -11,10 +11,6 @@ export default function Home() {
   const router = useRouter()
   useEffect(() => {
     if (session?.user?.role) {
-      toast.success(`Logged in as ${session.user.role}`, {
-        icon: session.user.role === 'mentor' ? '👨‍🏫' : '🎓',
-        id: 'welcome-toast'
-      })
       if (session.user.role === 'mentor') {
         router.push('/mentor/dashboard')
       } else {
