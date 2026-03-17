@@ -1,6 +1,5 @@
 import { signIn } from 'next-auth/react'
 import { Video, Calendar, Users } from 'lucide-react'
-
 export default function Hero() {
   return (
     <div className="bg-gradient-to-br from-primary-50 to-white">
@@ -14,7 +13,6 @@ export default function Hero() {
             A streamlined platform for mentors to schedule live Google Meet classes 
             and learners to join them seamlessly.
           </p>
-          
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <button
               onClick={() => signIn('google')}
@@ -23,7 +21,6 @@ export default function Hero() {
               Get Started with Google
             </button>
           </div>
-
           <div className="grid md:grid-cols-3 gap-8 mt-16">
             <div className="text-center">
               <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -32,7 +29,6 @@ export default function Hero() {
               <h3 className="text-lg font-semibold mb-2">Easy Scheduling</h3>
               <p className="text-gray-600">Schedule classes with integrated Google Calendar</p>
             </div>
-            
             <div className="text-center">
               <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Video className="h-8 w-8 text-primary-600" />
@@ -40,7 +36,6 @@ export default function Hero() {
               <h3 className="text-lg font-semibold mb-2">Google Meet Integration</h3>
               <p className="text-gray-600">Automatic Google Meet links for all classes</p>
             </div>
-            
             <div className="text-center">
               <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="h-8 w-8 text-primary-600" />

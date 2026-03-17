@@ -4,11 +4,9 @@ import { useEffect } from 'react'
 import Layout from '../components/Layout'
 import Hero from '../components/Hero'
 import Features from '../components/Features'
-
 export default function Home() {
   const { data: session, status } = useSession()
   const router = useRouter()
-
   useEffect(() => {
     if (session?.user) {
       if (!session.user.role) {
@@ -20,7 +18,6 @@ export default function Home() {
       }
     }
   }, [session, router])
-
   if (status === 'loading') {
     return (
       <Layout>
@@ -30,11 +27,9 @@ export default function Home() {
       </Layout>
     )
   }
-
   if (session) {
-    return null // Will redirect based on useEffect
+    return null 
   }
-
   return (
     <Layout>
       <Hero />

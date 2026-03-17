@@ -2,46 +2,37 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { X, Calendar, Clock, Users, AlertCircle } from 'lucide-react'
-
 export default function CreateClassModal({ onClose, onClassCreated }) {
   const [loading, setLoading] = useState(false)
   const { register, handleSubmit, formState: { errors }, reset, watch } = useForm()
-
   const startTime = watch('startTime')
-
   const onSubmit = async (data) => {
     setLoading(true)
     try {
-      // Additional client-side validation
       const start = new Date(data.startTime)
       const end = new Date(data.endTime)
       const now = new Date()
-
       if (start <= now) {
         toast.error('Start time must be in the future')
         setLoading(false)
         return
       }
-
       if (end <= start) {
         toast.error('End time must be after start time')
         setLoading(false)
         return
       }
-
       const durationHours = (end - start) / (1000 * 60 * 60)
       if (durationHours > 4) {
         toast.error('Class duration cannot exceed 4 hours')
         setLoading(false)
         return
       }
-
       if (durationHours < 0.25) {
         toast.error('Class must be at least 15 minutes long')
         setLoading(false)
         return
       }
-
       const response = await fetch('/api/classes/create', {
         method: 'POST',
         headers: {
@@ -55,9 +46,7 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
           maxAttendees: parseInt(data.maxAttendees) || 50
         }),
       })
-
       const result = await response.json()
-
       if (result.success) {
         toast.success(
           result.googleCalendarIntegrated 
@@ -76,23 +65,18 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
       setLoading(false)
     }
   }
-
-  // Generate minimum end time (15 minutes after start)
   const getMinEndTime = () => {
     if (!startTime) return ''
     const start = new Date(startTime)
     start.setMinutes(start.getMinutes() + 15)
     return start.toISOString().slice(0, 16)
   }
-
-  // Generate suggested end time (1 hour after start)
   const getSuggestedEndTime = () => {
     if (!startTime) return ''
     const start = new Date(startTime)
     start.setHours(start.getHours() + 1)
     return start.toISOString().slice(0, 16)
   }
-
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
@@ -108,7 +92,6 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
             <X className="h-6 w-6" />
           </button>
         </div>
-
         <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -131,7 +114,6 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
               </p>
             )}
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Description
@@ -151,7 +133,6 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
               </p>
             )}
           </div>
-
           <div className="grid grid-cols-1 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -171,7 +152,6 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
                 </p>
               )}
             </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 <Clock className="h-4 w-4 inline mr-1" />
@@ -197,7 +177,6 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
               )}
             </div>
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               <Users className="h-4 w-4 inline mr-1" />
@@ -213,7 +192,6 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
               <option value="100">100 students</option>
             </select>
           </div>
-
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
             <div className="flex items-start">
               <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" />
@@ -223,7 +201,6 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
               </div>
             </div>
           </div>
-
           <div className="flex space-x-3 pt-4">
             <button
               type="button"

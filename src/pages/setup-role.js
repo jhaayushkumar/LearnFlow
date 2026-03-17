@@ -4,20 +4,16 @@ import { useState, useEffect } from 'react'
 import { toast } from 'react-hot-toast'
 import Layout from '../components/Layout'
 import { UserCheck, GraduationCap } from 'lucide-react'
-
 export default function SetupRole() {
   const { data: session, update, status } = useSession()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-
   useEffect(() => {
     if (status === 'loading') return
-
     if (!session) {
       router.push('/')
       return
     }
-
     if (session.user?.role) {
       if (session.user.role === 'mentor') {
         router.push('/mentor/dashboard')
@@ -26,10 +22,8 @@ export default function SetupRole() {
       }
     }
   }, [session, status, router])
-
   const handleRoleSelection = async (role) => {
     if (!session?.user?.email) return
-
     setLoading(true)
     try {
       const response = await fetch('/api/user/update-role', {
@@ -39,13 +33,10 @@ export default function SetupRole() {
         },
         body: JSON.stringify({ role }),
       })
-
       const data = await response.json()
-
       if (data.success) {
         await update({ role })
         toast.success(`Welcome ${role}!`)
-        
         if (role === 'mentor') {
           router.push('/mentor/dashboard')
         } else {
@@ -61,7 +52,6 @@ export default function SetupRole() {
       setLoading(false)
     }
   }
-
   if (status === 'loading') {
     return (
       <Layout title="Loading - LearnFlow">
@@ -71,15 +61,12 @@ export default function SetupRole() {
       </Layout>
     )
   }
-
   if (!session) {
     return null
   }
-
   if (session.user?.role) {
     return null
   }
-
   return (
     <Layout title="Choose Your Role - LearnFlow">
       <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -92,7 +79,6 @@ export default function SetupRole() {
               Select how you'd like to use LearnFlow
             </p>
           </div>
-
           <div className="space-y-4">
             <button
               onClick={() => handleRoleSelection('mentor')}
@@ -111,7 +97,6 @@ export default function SetupRole() {
                 </div>
               </div>
             </button>
-
             <button
               onClick={() => handleRoleSelection('learner')}
               disabled={loading}
@@ -130,7 +115,6 @@ export default function SetupRole() {
               </div>
             </button>
           </div>
-
           {loading && (
             <div className="text-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mx-auto"></div>

@@ -1,29 +1,23 @@
 import { google } from 'googleapis'
-
 const getBaseUrl = () => {
   if (process.env.NEXTAUTH_URL) return process.env.NEXTAUTH_URL
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`
-  return `http://localhost:${process.env.PORT || 3000}`
+  if (process.env.VERCEL_URL) return `https:
+  return `http:
 }
-
 export function getGoogleCalendar(accessToken) {
   const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
     getBaseUrl() + '/api/auth/callback/google'
   )
-
   oauth2Client.setCredentials({
     access_token: accessToken
   })
-
   return google.calendar({ version: 'v3', auth: oauth2Client })
 }
-
 export async function createCalendarEvent(accessToken, eventData) {
   try {
     const calendar = getGoogleCalendar(accessToken)
-
     const event = {
       summary: eventData.title,
       description: eventData.description || 'LearnFlow class session',
@@ -52,14 +46,12 @@ export async function createCalendarEvent(accessToken, eventData) {
         ],
       },
     }
-
     const response = await calendar.events.insert({
       calendarId: 'primary',
       resource: event,
       conferenceDataVersion: 1,
       sendUpdates: 'all'
     })
-
     return {
       success: true,
       eventId: response.data.id,
@@ -74,17 +66,14 @@ export async function createCalendarEvent(accessToken, eventData) {
     }
   }
 }
-
 export async function deleteCalendarEvent(accessToken, eventId) {
   try {
     const calendar = getGoogleCalendar(accessToken)
-    
     await calendar.events.delete({
       calendarId: 'primary',
       eventId: eventId,
       sendUpdates: 'all'
     })
-
     return { success: true }
   } catch (error) {
     console.error('Error deleting calendar event:', error)

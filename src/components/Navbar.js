@@ -3,13 +3,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { Menu, X, BookOpen, Play } from 'lucide-react'
-
 export default function Navbar() {
   const { data: session } = useSession()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [liveClassCount, setLiveClassCount] = useState(0)
-
-  // Fetch live class count for learners
   useEffect(() => {
     if (session?.user?.role === 'learner') {
       const fetchLiveCount = async () => {
@@ -23,14 +20,11 @@ export default function Navbar() {
           console.error('Error fetching live class count:', error)
         }
       }
-
       fetchLiveCount()
-      // Update every 30 seconds
       const interval = setInterval(fetchLiveCount, 30000)
       return () => clearInterval(interval)
     }
   }, [session])
-
   return (
     <nav className="bg-white shadow-sm border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,12 +35,11 @@ export default function Navbar() {
               <span className="text-xl font-bold text-gray-900">LearnFlow</span>
             </Link>
           </div>
-
-          {/* Desktop Menu */}
+          {}
           <div className="hidden md:flex items-center space-x-4">
             {session ? (
               <>
-                {/* Navigation Links */}
+                {}
                 {session.user.role === 'learner' && (
                   <div className="flex items-center space-x-4 mr-4">
                     <Link
@@ -69,7 +62,6 @@ export default function Navbar() {
                     </Link>
                   </div>
                 )}
-
                 {session.user.role === 'mentor' && (
                   <div className="flex items-center space-x-4 mr-4">
                     <Link
@@ -80,7 +72,6 @@ export default function Navbar() {
                     </Link>
                   </div>
                 )}
-
                 <div className="flex items-center space-x-3">
                   {session.user.image && (
                     <Image
@@ -111,8 +102,7 @@ export default function Navbar() {
               </button>
             )}
           </div>
-
-          {/* Mobile menu button */}
+          {}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -122,13 +112,12 @@ export default function Navbar() {
             </button>
           </div>
         </div>
-
-        {/* Mobile Menu */}
+        {}
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-200">
             {session ? (
               <div className="space-y-3">
-                {/* Mobile Navigation Links */}
+                {}
                 {session.user.role === 'learner' && (
                   <div className="space-y-2 mb-4">
                     <Link
@@ -153,7 +142,6 @@ export default function Navbar() {
                     </Link>
                   </div>
                 )}
-
                 {session.user.role === 'mentor' && (
                   <div className="space-y-2 mb-4">
                     <Link
@@ -164,7 +152,6 @@ export default function Navbar() {
                     </Link>
                   </div>
                 )}
-
                 <div className="flex items-center space-x-3 px-2">
                   {session.user.image && (
                     <Image

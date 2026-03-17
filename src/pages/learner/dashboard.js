@@ -5,7 +5,6 @@ import Layout from '../../components/Layout'
 import ClassCard from '../../components/ClassCard'
 import { BookOpen, Calendar, Users, Search, Filter, Clock, Play, Star } from 'lucide-react'
 import { toast } from 'react-hot-toast'
-
 export default function LearnerDashboard() {
   const { data: session, status } = useSession()
   const router = useRouter()
@@ -15,39 +14,31 @@ export default function LearnerDashboard() {
   const [searchTerm, setSearchTerm] = useState('')
   const [filter, setFilter] = useState('all')
   const [sortBy, setSortBy] = useState('startTime')
-
   useEffect(() => {
     if (status === 'loading') return
-
     if (!session) {
       router.push('/')
       return
     }
-
     if (session.user.role !== 'learner') {
       router.push('/mentor/dashboard')
       return
     }
-
     fetchClasses()
     const interval = setInterval(fetchClasses, 30000)
     return () => clearInterval(interval)
   }, [session, status, router])
-
   const fetchClasses = async () => {
     try {
       const [allClassesRes, myClassesRes] = await Promise.all([
         fetch('/api/classes/all'),
         fetch('/api/classes/my-classes')
       ])
-      
       const allClassesData = await allClassesRes.json()
       const myClassesData = await myClassesRes.json()
-      
       if (allClassesData.success) {
         setClasses(allClassesData.classes)
       }
-      
       if (myClassesData.success) {
         setMyClasses(myClassesData.classes)
       }
@@ -58,7 +49,6 @@ export default function LearnerDashboard() {
       setLoading(false)
     }
   }
-
   const handleJoinClass = async (classId) => {
     try {
       const response = await fetch('/api/classes/join', {
@@ -68,9 +58,7 @@ export default function LearnerDashboard() {
         },
         body: JSON.stringify({ classId }),
       })
-      
       const data = await response.json()
-      
       if (data.success) {
         toast.success('Successfully joined the class!')
         fetchClasses()
@@ -82,7 +70,6 @@ export default function LearnerDashboard() {
       toast.error('Something went wrong')
     }
   }
-
   if (status === 'loading' || loading) {
     return (
       <Layout>
@@ -92,7 +79,6 @@ export default function LearnerDashboard() {
       </Layout>
     )
   }
-
   const now = new Date()
   const liveClasses = classes.filter(cls => {
     const start = new Date(cls.startTime)
@@ -101,12 +87,8 @@ export default function LearnerDashboard() {
   })
   const upcomingClasses = classes.filter(cls => new Date(cls.startTime) > now)
   const joinedClassIds = myClasses.map(cls => cls._id)
-
-  // Filter and search logic
   const getFilteredClasses = () => {
     let filtered = classes
-
-    // Apply filter
     switch (filter) {
       case 'live':
         filtered = liveClasses
@@ -120,8 +102,6 @@ export default function LearnerDashboard() {
       default:
         filtered = classes
     }
-
-    // Apply search
     if (searchTerm) {
       filtered = filtered.filter(cls =>
         cls.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -129,8 +109,6 @@ export default function LearnerDashboard() {
         cls.description?.toLowerCase().includes(searchTerm.toLowerCase())
       )
     }
-
-    // Apply sorting
     filtered.sort((a, b) => {
       switch (sortBy) {
         case 'title':
@@ -142,16 +120,13 @@ export default function LearnerDashboard() {
           return new Date(a.startTime) - new Date(b.startTime)
       }
     })
-
     return filtered
   }
-
   const filteredClasses = getFilteredClasses()
-
   return (
     <Layout title="Learner Dashboard - LearnFlow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
+        {}
         <div className="mb-8">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-gray-900">
@@ -159,8 +134,7 @@ export default function LearnerDashboard() {
             </h1>
             <p className="text-gray-600">Discover and join live classes from amazing mentors</p>
           </div>
-
-          {/* Stats Cards */}
+          {}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div className="card">
               <div className="flex items-center">
@@ -201,8 +175,7 @@ export default function LearnerDashboard() {
               </div>
             </div>
           </div>
-
-          {/* Live Classes Alert */}
+          {}
           {liveClasses.length > 0 && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
               <div className="flex items-center justify-between">
@@ -226,12 +199,10 @@ export default function LearnerDashboard() {
             </div>
           )}
         </div>
-
         {/* Search and Filter Controls */}
         <div className="mb-6">
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between mb-4">
             <h2 className="text-2xl font-bold text-gray-900">Browse Classes</h2>
-            
             {/* Search Bar */}
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -244,7 +215,6 @@ export default function LearnerDashboard() {
               />
             </div>
           </div>
-
           {/* Filter and Sort Controls */}
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
             <div className="flex items-center space-x-2">
@@ -260,7 +230,6 @@ export default function LearnerDashboard() {
                 <option value="joined">My Classes ({myClasses.length})</option>
               </select>
             </div>
-
             <div className="flex items-center space-x-2">
               <span className="text-sm text-gray-500">Sort by:</span>
               <select
@@ -273,7 +242,6 @@ export default function LearnerDashboard() {
                 <option value="mentor">Mentor Name</option>
               </select>
             </div>
-
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm('')}
@@ -284,7 +252,6 @@ export default function LearnerDashboard() {
             )}
           </div>
         </div>
-
         {/* Classes List */}
         <div className="mb-8">
           {filteredClasses.length > 0 ? (
@@ -360,8 +327,7 @@ export default function LearnerDashboard() {
             </div>
           )}
         </div>
-
-        {/* Quick Actions */}
+        {}
         {myClasses.length > 0 && (
           <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
@@ -377,7 +343,6 @@ export default function LearnerDashboard() {
                 <h4 className="font-medium text-gray-900">My Classes</h4>
                 <p className="text-sm text-gray-600">View your joined classes</p>
               </button>
-              
               <button
                 onClick={() => setFilter('live')}
                 className="text-left p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
@@ -386,7 +351,6 @@ export default function LearnerDashboard() {
                 <h4 className="font-medium text-gray-900">Live Classes</h4>
                 <p className="text-sm text-gray-600">Join classes happening now</p>
               </button>
-              
               <button
                 onClick={() => setFilter('upcoming')}
                 className="text-left p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"

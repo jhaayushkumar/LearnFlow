@@ -6,41 +6,31 @@ import ClassCard from '../../components/ClassCard'
 import { Play, Clock, Users, ArrowLeft, RefreshCw } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 import Link from 'next/link'
-
 export default function LiveClasses() {
   const { data: session, status } = useSession()
   const router = useRouter()
   const [liveClasses, setLiveClasses] = useState([])
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
-
   useEffect(() => {
     if (status === 'loading') return
-
     if (!session) {
       router.push('/')
       return
     }
-
     if (session.user.role !== 'learner') {
       router.push('/mentor/dashboard')
       return
     }
-
     fetchLiveClasses()
-    
-    // Auto-refresh every 30 seconds to keep live status updated
     const interval = setInterval(fetchLiveClasses, 30000)
     return () => clearInterval(interval)
   }, [session, status, router])
-
   const fetchLiveClasses = async (showRefreshing = false) => {
     if (showRefreshing) setRefreshing(true)
-    
     try {
       const response = await fetch('/api/classes/live')
       const data = await response.json()
-      
       if (data.success) {
         setLiveClasses(data.classes)
       } else {
@@ -54,7 +44,6 @@ export default function LiveClasses() {
       if (showRefreshing) setRefreshing(false)
     }
   }
-
   const handleJoinClass = async (classId) => {
     try {
       const response = await fetch('/api/classes/join', {
@@ -64,12 +53,9 @@ export default function LiveClasses() {
         },
         body: JSON.stringify({ classId }),
       })
-      
       const data = await response.json()
-      
       if (data.success) {
         toast.success('Successfully joined the class!')
-        // Refresh to update joined status
         fetchLiveClasses()
       } else {
         toast.error(data.message || 'Failed to join class')
@@ -79,7 +65,6 @@ export default function LiveClasses() {
       toast.error('Something went wrong')
     }
   }
-
   if (status === 'loading' || loading) {
     return (
       <Layout>
@@ -89,11 +74,10 @@ export default function LiveClasses() {
       </Layout>
     )
   }
-
   return (
     <Layout title="Live Classes - LearnFlow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
+        {}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-4">
@@ -111,7 +95,6 @@ export default function LiveClasses() {
                 <p className="text-gray-600">Join classes happening right now</p>
               </div>
             </div>
-            
             <button
               onClick={() => fetchLiveClasses(true)}
               disabled={refreshing}
@@ -121,8 +104,7 @@ export default function LiveClasses() {
               <span>Refresh</span>
             </button>
           </div>
-
-          {/* Live Status Banner */}
+          {}
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
             <div className="flex items-center">
               <div className="h-3 w-3 bg-red-500 rounded-full animate-pulse mr-3"></div>
@@ -139,8 +121,7 @@ export default function LiveClasses() {
               </div>
             </div>
           </div>
-
-          {/* Stats */}
+          {}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="card">
               <div className="flex items-center">
@@ -173,8 +154,7 @@ export default function LiveClasses() {
             </div>
           </div>
         </div>
-
-        {/* Live Classes List */}
+        {}
         <div className="mb-8">
           {liveClasses.length > 0 ? (
             <>
@@ -186,7 +166,6 @@ export default function LiveClasses() {
                   Click "Join Live Class" to enter the Google Meet session
                 </p>
               </div>
-              
               <div className="grid gap-6">
                 {liveClasses.map(cls => (
                   <ClassCard
@@ -208,7 +187,6 @@ export default function LiveClasses() {
                   There are no classes happening right now. Check back later or browse upcoming classes to join.
                 </p>
               </div>
-              
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link 
                   href="/learner/dashboard"
@@ -227,8 +205,7 @@ export default function LiveClasses() {
             </div>
           )}
         </div>
-
-        {/* Tips for Live Classes */}
+        {}
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
           <h3 className="text-lg font-semibold text-blue-900 mb-3">
             Tips for Live Classes

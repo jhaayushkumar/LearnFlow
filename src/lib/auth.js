@@ -2,13 +2,6 @@ import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import connectDB from './mongodb'
 import User from '../models/User'
-
-const getBaseUrl = () => {
-  if (process.env.NEXTAUTH_URL) return process.env.NEXTAUTH_URL
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`
-  return `http://localhost:${process.env.PORT || 3000}`
-}
-
 export const authOptions = {
   providers: [
     GoogleProvider({
@@ -16,12 +9,30 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       authorization: {
         params: {
-          scope: 'openid email profile https://www.googleapis.com/auth/calendar'
+          scope: 'openid email profile' 
         }
       }
     })
   ],
   callbacks: {
+    async signIn({ user, account, profile }) {
+      try {
+        await connectDB()
+        const existingUser = await User.findOne({ email: user.email })
+        if (!existingUser) {
+          await User.create({
+            email: user.email,
+            name: user.name,
+            image: user.image,
+            role: null
+          })
+        }
+        return true
+      } catch (error) {
+        console.error('Error saving user:', error)
+        return true 
+      }
+    },
     async jwt({ token, account }) {
       if (account) {
         token.accessToken = account.access_token
@@ -30,7 +41,6 @@ export const authOptions = {
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken
-      
       if (session?.user?.email) {
         try {
           await connectDB()
@@ -44,36 +54,11 @@ export const authOptions = {
         }
       }
       return session
-    },
-    async signIn({ user, account, profile }) {
-      if (account.provider === 'google') {
-        try {
-          await connectDB()
-          
-          const existingUser = await User.findOne({ email: user.email })
-          
-          if (!existingUser) {
-            await User.create({
-              email: user.email,
-              name: user.name,
-              image: user.image,
-              role: null
-            })
-          }
-          
-          return true
-        } catch (error) {
-          console.error('Error saving user:', error)
-          return false
-        }
-      }
-      return true
     }
   },
-  pages: {
-    signIn: '/auth/signin',
-  },
   secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: 'jwt',
+  }
 }
-
 export default NextAuth(authOptions)

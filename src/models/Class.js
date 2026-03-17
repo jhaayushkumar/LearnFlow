@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-
 const ClassSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -58,19 +57,15 @@ const ClassSchema = new mongoose.Schema({
 }, {
   timestamps: true
 })
-
 ClassSchema.index({ mentorId: 1, startTime: -1 })
 ClassSchema.index({ isActive: 1, startTime: 1 })
 ClassSchema.index({ startTime: 1, endTime: 1 })
-
 ClassSchema.virtual('isLive').get(function() {
   const now = new Date()
   return now >= this.startTime && now <= this.endTime
 })
-
 ClassSchema.virtual('isUpcoming').get(function() {
   const now = new Date()
   return now < this.startTime
 })
-
 export default mongoose.models.Class || mongoose.model('Class', ClassSchema)

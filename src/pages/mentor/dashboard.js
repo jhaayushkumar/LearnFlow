@@ -5,36 +5,29 @@ import Layout from '../../components/Layout'
 import CreateClassModal from '../../components/CreateClassModal'
 import ClassCard from '../../components/ClassCard'
 import { Plus, Calendar, Users, Clock, TrendingUp, Filter } from 'lucide-react'
-
 export default function MentorDashboard() {
   const { data: session, status } = useSession()
   const router = useRouter()
   const [classes, setClasses] = useState([])
   const [loading, setLoading] = useState(true)
   const [showCreateModal, setShowCreateModal] = useState(false)
-  const [filter, setFilter] = useState('all') // all, upcoming, live, past
-
+  const [filter, setFilter] = useState('all') 
   useEffect(() => {
     if (status === 'loading') return
-
     if (!session) {
       router.push('/')
       return
     }
-
     if (session.user.role !== 'mentor') {
       router.push('/learner/dashboard')
       return
     }
-
     fetchClasses()
   }, [session, status, router])
-
   const fetchClasses = async () => {
     try {
       const response = await fetch('/api/classes/mentor')
       const data = await response.json()
-      
       if (data.success) {
         setClasses(data.classes)
       }
@@ -44,20 +37,16 @@ export default function MentorDashboard() {
       setLoading(false)
     }
   }
-
   const handleClassCreated = (newClass) => {
     setClasses(prev => [newClass, ...prev])
     setShowCreateModal(false)
   }
-
   const handleDeleteClass = async (classId) => {
     try {
       const response = await fetch(`/api/classes/${classId}`, {
         method: 'DELETE'
       })
-      
       const data = await response.json()
-      
       if (data.success) {
         setClasses(prev => prev.filter(cls => cls._id !== classId))
       }
@@ -65,7 +54,6 @@ export default function MentorDashboard() {
       console.error('Error deleting class:', error)
     }
   }
-
   if (status === 'loading' || loading) {
     return (
       <Layout>
@@ -75,7 +63,6 @@ export default function MentorDashboard() {
       </Layout>
     )
   }
-
   const now = new Date()
   const upcomingClasses = classes.filter(cls => new Date(cls.startTime) > now)
   const liveClasses = classes.filter(cls => {
@@ -85,7 +72,6 @@ export default function MentorDashboard() {
   })
   const pastClasses = classes.filter(cls => new Date(cls.endTime) < now)
   const totalAttendees = classes.reduce((sum, cls) => sum + (cls.attendees?.length || 0), 0)
-
   const getFilteredClasses = () => {
     switch (filter) {
       case 'upcoming': return upcomingClasses
@@ -94,9 +80,7 @@ export default function MentorDashboard() {
       default: return classes
     }
   }
-
   const filteredClasses = getFilteredClasses()
-
   return (
     <Layout title="Mentor Dashboard - LearnFlow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -116,8 +100,7 @@ export default function MentorDashboard() {
               <span>Schedule Class</span>
             </button>
           </div>
-
-          {/* Enhanced Stats */}
+          {}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div className="card">
               <div className="flex items-center">
@@ -158,8 +141,7 @@ export default function MentorDashboard() {
               </div>
             </div>
           </div>
-
-          {/* Live Classes Alert */}
+          {}
           {liveClasses.length > 0 && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
               <div className="flex items-center">
@@ -174,8 +156,7 @@ export default function MentorDashboard() {
             </div>
           )}
         </div>
-
-        {/* Filter Tabs */}
+        {}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold text-gray-900">Your Classes</h2>
@@ -193,8 +174,7 @@ export default function MentorDashboard() {
               </select>
             </div>
           </div>
-
-          {/* Classes List */}
+          {}
           {filteredClasses.length > 0 ? (
             <div className="grid gap-6">
               {filteredClasses.map(cls => (
@@ -237,8 +217,7 @@ export default function MentorDashboard() {
             </div>
           )}
         </div>
-
-        {/* Quick Actions */}
+        {}
         {classes.length > 0 && (
           <div className="bg-gradient-to-r from-primary-50 to-blue-50 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
@@ -254,7 +233,6 @@ export default function MentorDashboard() {
                 <h4 className="font-medium text-gray-900">Schedule New Class</h4>
                 <p className="text-sm text-gray-600">Create another learning session</p>
               </button>
-              
               <button
                 onClick={() => setFilter('upcoming')}
                 className="text-left p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
@@ -263,7 +241,6 @@ export default function MentorDashboard() {
                 <h4 className="font-medium text-gray-900">View Upcoming</h4>
                 <p className="text-sm text-gray-600">Check your scheduled classes</p>
               </button>
-              
               <button
                 onClick={() => setFilter('past')}
                 className="text-left p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
@@ -276,7 +253,6 @@ export default function MentorDashboard() {
           </div>
         )}
       </div>
-
       {showCreateModal && (
         <CreateClassModal
           onClose={() => setShowCreateModal(false)}

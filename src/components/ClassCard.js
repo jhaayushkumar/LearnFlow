@@ -1,7 +1,6 @@
 import { format } from 'date-fns'
 import { Calendar, Clock, Users, ExternalLink, Trash2, Star, Play, AlertCircle } from 'lucide-react'
 import { toast } from 'react-hot-toast'
-
 export default function ClassCard({ classData, isMentor = false, isPast = false, onDelete, onJoin, isJoined = false }) {
   const startTime = new Date(classData.startTime)
   const endTime = new Date(classData.endTime)
@@ -10,7 +9,6 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
   const isUpcoming = now < startTime
   const timeUntilStart = startTime - now
   const minutesUntilStart = Math.floor(timeUntilStart / (1000 * 60))
-
   const handleJoinClass = () => {
     if (classData.meetLink) {
       window.open(classData.meetLink, '_blank')
@@ -21,13 +19,11 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
       toast.error('Meeting link not available')
     }
   }
-
   const handleDelete = () => {
     if (window.confirm('Are you sure you want to delete this class?')) {
       onDelete(classData._id)
     }
   }
-
   const getTimeStatus = () => {
     if (isLive) {
       return { text: 'LIVE NOW', color: 'bg-red-500 text-white animate-pulse' }
@@ -39,9 +35,7 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
       return { text: 'Completed', color: 'bg-gray-500 text-white' }
     }
   }
-
   const timeStatus = getTimeStatus()
-
   return (
     <div className={`card transition-all duration-200 hover:shadow-lg ${
       isLive ? 'border-red-500 bg-red-50' : 
@@ -57,19 +51,16 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
               {timeStatus.text}
             </span>
           </div>
-          
           {classData.description && (
             <p className="text-gray-600 text-sm mb-3 line-clamp-2">{classData.description}</p>
           )}
         </div>
       </div>
-
       <div className="space-y-2 mb-4">
         <div className="flex items-center text-sm text-gray-600">
           <Calendar className="h-4 w-4 mr-2 flex-shrink-0" />
           <span>{format(startTime, 'MMM dd, yyyy')}</span>
         </div>
-        
         <div className="flex items-center text-sm text-gray-600">
           <Clock className="h-4 w-4 mr-2 flex-shrink-0" />
           <span>
@@ -81,14 +72,12 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
             )}
           </span>
         </div>
-
         {!isMentor && (
           <div className="flex items-center text-sm text-gray-600">
             <Users className="h-4 w-4 mr-2 flex-shrink-0" />
             <span>Mentor: {classData.mentorName}</span>
           </div>
         )}
-
         {isMentor && (
           <div className="flex items-center text-sm text-gray-600">
             <Users className="h-4 w-4 mr-2 flex-shrink-0" />
@@ -101,8 +90,7 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
           </div>
         )}
       </div>
-
-      {/* Action Buttons */}
+      {}
       <div className="flex space-x-2">
         {!isPast && (
           <>
@@ -118,7 +106,6 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
                 </span>
               </button>
             )}
-
             <button
               onClick={handleJoinClass}
               className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-lg font-medium transition-colors ${
@@ -141,7 +128,6 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
             </button>
           </>
         )}
-
         {isMentor && onDelete && !isPast && (
           <button
             onClick={handleDelete}
@@ -152,8 +138,7 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
           </button>
         )}
       </div>
-
-      {/* Additional Info */}
+      {}
       {isPast && (
         <div className="mt-3 text-center">
           <span className="text-sm text-gray-500 flex items-center justify-center">
@@ -162,7 +147,6 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
           </span>
         </div>
       )}
-
       {!isMentor && isJoined && !isPast && (
         <div className="mt-3 text-center">
           <span className="text-sm text-green-600 flex items-center justify-center font-medium">
@@ -171,7 +155,6 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
           </span>
         </div>
       )}
-
       {!isMentor && classData.attendees?.length >= classData.maxAttendees && !isJoined && (
         <div className="mt-3 text-center">
           <span className="text-sm text-red-600 flex items-center justify-center">
