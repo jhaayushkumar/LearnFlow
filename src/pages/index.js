@@ -2,16 +2,19 @@ import { useSession, signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import Layout from '../components/Layout'
 import Hero from '../components/Hero'
 import Features from '../components/Features'
 import RoleSelectionModal from '../components/RoleSelectionModal'
-import RoleSelectionModal from '../components/RoleSelectionModal'
-import { useState } from 'react'
 export default function Home() {
   const { data: session, status } = useSession()
   const router = useRouter()
   useEffect(() => {
     if (session?.user?.role) {
+      toast.success(`Logged in as ${session.user.role}`, {
+        icon: session.user.role === 'mentor' ? '👨‍🏫' : '🎓',
+        id: 'welcome-toast'
+      })
       if (session.user.role === 'mentor') {
         router.push('/mentor/dashboard')
       } else {
