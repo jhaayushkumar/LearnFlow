@@ -62,7 +62,4 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
    ```
 
 ## OAuth Verification and Scopes
-This application uses the `https://www.googleapis.com/auth/calendar.events` scope. In development environments, users may see an "Unverified App" warning from Google. This is expected as the application uses sensitive scopes to automate meeting generation. For evaluation purposes, Clicking "Advanced" and "Go to LearnFlow (unsafe)" will allow the application to function correctly.
-
-## Legal Compliance
-The application includes a Privacy Policy and Terms of Service located at /privacy and /terms respectively, ensuring compliance with Google Developer requirements.
+This application uses the `https://www.googleapis.com/auth/calendar.events` scope. In development environments, users may see an "Unverified App" warning from Google. This is expected as the application uses sensitive scopes to automate meeting generation. For this you have to, Clicking "Advanced" and "Go to LearnFlow (unsafe)" will allow the application to function correctly.
