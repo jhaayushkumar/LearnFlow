@@ -87,10 +87,10 @@ export default function MentorDashboard() {
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              <h1 className="text-3xl font-bold text-gray-900">
                 Welcome back, {session?.user?.name}
               </h1>
-              <p className="text-gray-600 dark:text-gray-400">Manage your classes and schedule new sessions</p>
+              <p className="text-gray-600">Manage your classes and schedule new sessions</p>
             </div>
             <button
               onClick={() => setShowCreateModal(true)}
@@ -106,8 +106,8 @@ export default function MentorDashboard() {
               <div className="flex items-center">
                 <Calendar className="h-8 w-8 text-primary-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Classes</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{classes.length}</p>
+                  <p className="text-sm font-medium text-gray-600">Total Classes</p>
+                  <p className="text-2xl font-bold text-gray-900">{classes.length}</p>
                 </div>
               </div>
             </div>
@@ -115,8 +115,8 @@ export default function MentorDashboard() {
               <div className="flex items-center">
                 <Clock className="h-8 w-8 text-green-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Upcoming</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{upcomingClasses.length}</p>
+                  <p className="text-sm font-medium text-gray-600">Upcoming</p>
+                  <p className="text-2xl font-bold text-gray-900">{upcomingClasses.length}</p>
                 </div>
               </div>
             </div>
@@ -126,8 +126,8 @@ export default function MentorDashboard() {
                   <div className="h-3 w-3 bg-red-500 rounded-full animate-pulse"></div>
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Live Now</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{liveClasses.length}</p>
+                  <p className="text-sm font-medium text-gray-600">Live Now</p>
+                  <p className="text-2xl font-bold text-gray-900">{liveClasses.length}</p>
                 </div>
               </div>
             </div>
@@ -135,8 +135,8 @@ export default function MentorDashboard() {
               <div className="flex items-center">
                 <Users className="h-8 w-8 text-blue-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Students</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{totalAttendees}</p>
+                  <p className="text-sm font-medium text-gray-600">Total Students</p>
+                  <p className="text-2xl font-bold text-gray-900">{totalAttendees}</p>
                 </div>
               </div>
             </div>
@@ -159,13 +159,13 @@ export default function MentorDashboard() {
         {}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Your Classes</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Your Classes</h2>
             <div className="flex items-center space-x-2">
               <Filter className="h-5 w-5 text-gray-500" />
               <select
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
-                className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
               >
                 <option value="all">All Classes ({classes.length})</option>
                 <option value="live">Live Now ({liveClasses.length})</option>
@@ -230,24 +230,24 @@ export default function MentorDashboard() {
                 className="text-left p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
               >
                 <Plus className="h-6 w-6 text-primary-600 mb-2" />
-                <h4 className="font-medium text-gray-900 dark:text-white">Schedule New Class</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Create another learning session</p>
+                <h4 className="font-medium text-gray-900">Schedule New Class</h4>
+                <p className="text-sm text-gray-600">Create another learning session</p>
               </button>
               <button
                 onClick={() => setFilter('upcoming')}
-                className="text-left p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow dark:bg-gray-800 dark:hover:bg-gray-700"
+                className="text-left p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
               >
                 <Clock className="h-6 w-6 text-green-600 mb-2" />
-                <h4 className="font-medium text-gray-900 dark:text-white">View Upcoming</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Check your scheduled classes</p>
+                <h4 className="font-medium text-gray-900">View Upcoming</h4>
+                <p className="text-sm text-gray-600">Check your scheduled classes</p>
               </button>
               <button
                 onClick={() => setFilter('past')}
-                className="text-left p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow dark:bg-gray-800 dark:hover:bg-gray-700"
+                className="text-left p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
               >
                 <Calendar className="h-6 w-6 text-gray-600 mb-2" />
-                <h4 className="font-medium text-gray-900 dark:text-white">View History</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">See your completed classes</p>
+                <h4 className="font-medium text-gray-900">View History</h4>
+                <p className="text-sm text-gray-600">See your completed classes</p>
               </button>
             </div>
           </div>

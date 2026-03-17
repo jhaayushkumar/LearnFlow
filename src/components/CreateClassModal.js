@@ -80,22 +80,22 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
   }
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto dark:bg-gray-800 transition-colors duration-200">
-        <div className="flex justify-between items-center p-6 border-b dark:border-gray-700">
-          <h2 className="text-xl font-bold text-gray-900 flex items-center dark:text-white">
+      <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <div className="flex justify-between items-center p-6 border-b">
+          <h2 className="text-xl font-bold text-gray-900 flex items-center">
             <Calendar className="h-5 w-5 mr-2 text-primary-600" />
             Schedule New Class
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors dark:hover:text-gray-300"
+            className="text-gray-400 hover:text-gray-600 transition-colors"
           >
             <X className="h-6 w-6" />
           </button>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Class Title *
             </label>
             <input
@@ -116,7 +116,7 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Description
             </label>
             <textarea
@@ -136,7 +136,7 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
           </div>
           <div className="grid grid-cols-1 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 <Clock className="h-4 w-4 inline mr-1" />
                 Start Date & Time *
               </label>
@@ -154,7 +154,7 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 <Clock className="h-4 w-4 inline mr-1" />
                 End Date & Time *
               </label>
@@ -179,7 +179,7 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               <Users className="h-4 w-4 inline mr-1" />
               Maximum Attendees
             </label>
@@ -195,7 +195,7 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
           </div>
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label className="block text-sm font-medium text-gray-700">
                 <ExternalLink className="h-4 w-4 inline mr-1" />
                 Google Meet Link *
               </label>
@@ -224,12 +224,12 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
               </p>
             )}
           </div>
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 dark:bg-blue-900/10 dark:border-blue-900/20">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
             <div className="flex items-start">
-              <div className="h-5 w-5 bg-blue-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0 dark:bg-blue-900/30">
-                <div className="h-2.5 w-2.5 bg-blue-600 rounded-full dark:bg-blue-400"></div>
+              <div className="h-5 w-5 bg-blue-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
+                <div className="h-2.5 w-2.5 bg-blue-600 rounded-full"></div>
               </div>
-              <div className="text-sm text-blue-800 dark:text-blue-200">
+              <div className="text-sm text-blue-800">
                 <p className="font-medium mb-1">Shared Link Strategy</p>
                 <p>Since we prioritize security and avoid "Unverified App" warnings, please provide a real Google Meet link. Everyone joins the same session instantly!</p>
               </div>

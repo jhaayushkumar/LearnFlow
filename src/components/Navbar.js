@@ -2,17 +2,11 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import { Menu, X, BookOpen, Play, Sun, Moon } from 'lucide-react'
+import { Menu, X, BookOpen, Play } from 'lucide-react'
 export default function Navbar() {
   const { data: session } = useSession()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [liveClassCount, setLiveClassCount] = useState(0)
-  const [isDarkMode, setIsDarkMode] = useState(false)
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode)
-    document.documentElement.classList.toggle('dark')
-  }
   useEffect(() => {
     if (session?.user?.role === 'learner') {
       const fetchLiveCount = async () => {
@@ -32,13 +26,13 @@ export default function Navbar() {
     }
   }, [session])
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200 transition-colors duration-200 dark:bg-gray-800 dark:border-gray-700">
+    <nav className="bg-white shadow-sm border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
               <BookOpen className="h-8 w-8 text-primary-600" />
-              <span className="text-xl font-bold text-gray-900 dark:text-white">LearnFlow</span>
+              <span className="text-xl font-bold text-gray-900">LearnFlow</span>
             </Link>
           </div>
           {}
@@ -50,13 +44,13 @@ export default function Navbar() {
                   <div className="flex items-center space-x-4 mr-4">
                     <Link
                       href="/learner/dashboard"
-                      className="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors dark:text-gray-300 dark:hover:text-primary-400"
+                      className="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                     >
                       Dashboard
                     </Link>
                     <Link
                       href="/learner/live-classes"
-                      className="flex items-center space-x-1 text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium transition-colors relative dark:text-gray-300 dark:hover:text-red-400"
+                      className="flex items-center space-x-1 text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium transition-colors relative"
                     >
                       <Play className="h-4 w-4" />
                       <span>Live Classes</span>
@@ -72,20 +66,13 @@ export default function Navbar() {
                   <div className="flex items-center space-x-4 mr-4">
                     <Link
                       href="/mentor/dashboard"
-                      className="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors dark:text-gray-300 dark:hover:text-primary-400"
+                      className="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                     >
                       Dashboard
                     </Link>
                   </div>
                 )}
                 <div className="flex items-center space-x-3">
-                  <button
-                    onClick={toggleTheme}
-                    className="p-2 text-gray-500 hover:text-primary-600 hover:bg-gray-100 rounded-full transition-colors dark:text-gray-400 dark:hover:text-primary-400 dark:hover:bg-gray-700"
-                    title="Toggle Theme"
-                  >
-                    {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-                  </button>
                   {session.user.image && (
                     <Image
                       src={session.user.image}
@@ -95,7 +82,7 @@ export default function Navbar() {
                       className="rounded-full"
                     />
                   )}
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <span className="text-sm font-medium text-gray-700">
                     {session.user.name}
                   </span>
                 </div>
@@ -107,21 +94,12 @@ export default function Navbar() {
                 </button>
               </>
             ) : (
-              <>
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 text-gray-500 hover:text-primary-600 hover:bg-gray-100 rounded-full transition-colors mr-2"
-                  title="Toggle Theme"
-                >
-                  {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-                </button>
                 <button
                   onClick={() => signIn('google')}
                   className="btn-primary"
                 >
                   Sign In with Google
                 </button>
-              </>
             )}
           </div>
           {}
@@ -144,13 +122,13 @@ export default function Navbar() {
                   <div className="space-y-2 mb-4">
                     <Link
                       href="/learner/dashboard"
-                      className="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded dark:text-gray-300 dark:hover:bg-gray-700"
+                      className="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded"
                     >
                       Dashboard
                     </Link>
                     <Link
                       href="/learner/live-classes"
-                      className="flex items-center justify-between px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded dark:text-gray-300 dark:hover:bg-gray-700"
+                      className="flex items-center justify-between px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded"
                     >
                       <div className="flex items-center space-x-2">
                         <Play className="h-4 w-4" />
@@ -168,7 +146,7 @@ export default function Navbar() {
                   <div className="space-y-2 mb-4">
                     <Link
                       href="/mentor/dashboard"
-                      className="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded dark:text-gray-300 dark:hover:bg-gray-700"
+                      className="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded"
                     >
                       Dashboard
                     </Link>
@@ -185,16 +163,10 @@ export default function Navbar() {
                         className="rounded-full"
                       />
                     )}
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <span className="text-sm font-medium text-gray-700">
                       {session.user.name}
                     </span>
                   </div>
-                  <button
-                    onClick={toggleTheme}
-                    className="p-2 text-gray-500 hover:text-primary-600 hover:bg-gray-100 rounded-full"
-                  >
-                    {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-                  </button>
                 </div>
                 <button
                   onClick={() => signOut()}
@@ -204,23 +176,12 @@ export default function Navbar() {
                 </button>
               </div>
             ) : (
-              <div className="space-y-3">
-                <div className="flex justify-between items-center w-full px-2 py-2">
-                  <button
-                    onClick={toggleTheme}
-                    className="flex items-center space-x-2 text-sm text-gray-700 hover:bg-gray-100 rounded p-2 flex-1 dark:text-gray-300 dark:hover:bg-gray-700"
-                  >
-                    {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-                    <span>{isDarkMode ? 'Light Mode' : 'Dark Mode'}</span>
-                  </button>
-                </div>
-                <button
-                  onClick={() => signIn('google')}
-                  className="w-full btn-primary"
-                >
-                  Sign In with Google
-                </button>
-              </div>
+              <button
+                onClick={() => signIn('google')}
+                className="w-full btn-primary"
+              >
+                Sign In with Google
+              </button>
             )}
           </div>
         )}
