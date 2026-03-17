@@ -8,7 +8,7 @@ const generateMeetLink = () => {
   const part1 = Array.from({ length: 3 }, () => chars[Math.floor(Math.random() * chars.length)]).join('')
   const part2 = Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join('')
   const part3 = Array.from({ length: 3 }, () => chars[Math.floor(Math.random() * chars.length)]).join('')
-  return `https:
+  return `https://meet.google.com/${part1}-${part2}-${part3}`
 }
 export default async function handler(req, res) {
   if (req.method !== 'POST') {

@@ -1,8 +1,8 @@
 import { google } from 'googleapis'
 const getBaseUrl = () => {
   if (process.env.NEXTAUTH_URL) return process.env.NEXTAUTH_URL
-  if (process.env.VERCEL_URL) return `https:
-  return `http:
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`
+  return `http://localhost:3000`
 }
 export function getGoogleCalendar(accessToken) {
   const oauth2Client = new google.auth.OAuth2(
