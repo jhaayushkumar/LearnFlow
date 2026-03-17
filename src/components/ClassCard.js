@@ -36,6 +36,10 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
     }
   }
   const timeStatus = getTimeStatus()
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text)
+    toast.success('Link copied to clipboard!')
+  }
   return (
     <div className={`card transition-all duration-200 hover:shadow-lg ${
       isLive ? 'border-red-500 bg-red-50' : 
@@ -65,11 +69,6 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
           <Clock className="h-4 w-4 mr-2 flex-shrink-0" />
           <span>
             {format(startTime, 'h:mm a')} - {format(endTime, 'h:mm a')}
-            {isUpcoming && minutesUntilStart <= 60 && minutesUntilStart > 0 && (
-              <span className="ml-2 text-orange-600 font-medium">
-                (Starts in {minutesUntilStart} minutes)
-              </span>
-            )}
           </span>
         </div>
         {!isMentor && (
@@ -83,12 +82,19 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
             <Users className="h-4 w-4 mr-2 flex-shrink-0" />
             <span>
               {classData.attendees?.length || 0} / {classData.maxAttendees} students
-              {classData.attendees?.length >= classData.maxAttendees && (
-                <span className="ml-2 text-red-600 font-medium">(Full)</span>
-              )}
             </span>
           </div>
         )}
+        <div className="flex items-center text-xs text-primary-600 font-mono bg-primary-50 p-2 rounded border border-primary-100 mt-2">
+          <ExternalLink className="h-3 w-3 mr-2" />
+          <span className="truncate flex-1">{classData.meetLink}</span>
+          <button 
+            onClick={() => copyToClipboard(classData.meetLink)}
+            className="ml-2 hover:text-primary-800 underline"
+          >
+            Copy
+          </button>
+        </div>
       </div>
       {}
       <div className="flex space-x-2">
