@@ -194,10 +194,10 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
           </div>
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
             <div className="flex items-start">
-              <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" />
+              <Clock className="h-5 w-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" />
               <div className="text-sm text-blue-800">
-                <p className="font-medium mb-1">Google Calendar Integration</p>
-                <p>Your class will be automatically added to Google Calendar with a Google Meet link for seamless video conferencing.</p>
+                <p className="font-medium mb-1">Instant Google Meet Link</p>
+                <p>A professional Google Meet link will be generated instantly for your class, accessible by all your students.</p>
               </div>
             </div>
           </div>

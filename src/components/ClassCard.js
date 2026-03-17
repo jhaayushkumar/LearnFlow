@@ -94,7 +94,7 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
       <div className="flex space-x-2">
         {!isPast && (
           <>
-            {!isMentor && !isJoined && (
+            {!isMentor && !isJoined && !isLive && (
               <button
                 onClick={() => onJoin && onJoin(classData._id)}
                 className="flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-lg font-medium transition-colors bg-green-600 hover:bg-green-700 text-white"
@@ -106,26 +106,29 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
                 </span>
               </button>
             )}
-            <button
-              onClick={handleJoinClass}
-              className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-lg font-medium transition-colors ${
-                isLive
-                  ? 'bg-red-600 hover:bg-red-700 text-white'
-                  : 'bg-primary-600 hover:bg-primary-700 text-white'
-              }`}
-            >
-              {isLive ? (
-                <>
-                  <Play className="h-4 w-4" />
-                  <span>Join Live Class</span>
-                </>
-              ) : (
-                <>
-                  <ExternalLink className="h-4 w-4" />
-                  <span>Go to Class</span>
-                </>
-              )}
-            </button>
+            {(isMentor || isJoined || isLive) && (
+              <button
+                onClick={handleJoinClass}
+                className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-lg font-medium transition-colors ${
+                  isLive
+                    ? 'bg-red-600 hover:bg-red-700 text-white shadow-md'
+                    : 'bg-primary-600 hover:bg-primary-700 text-white'
+                }`}
+                disabled={!isMentor && !isJoined && isLive && classData.attendees?.length >= classData.maxAttendees}
+              >
+                {isLive ? (
+                  <>
+                    <Play className="h-4 w-4" />
+                    <span>Join Live Class</span>
+                  </>
+                ) : (
+                  <>
+                    <ExternalLink className="h-4 w-4" />
+                    <span>Go to Class</span>
+                  </>
+                )}
+              </button>
+            )}
           </>
         )}
         {isMentor && onDelete && !isPast && (
