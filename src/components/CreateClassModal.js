@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
-import { X, Calendar, Clock, Users, AlertCircle } from 'lucide-react'
+import { X, Calendar, Clock, Users, AlertCircle, ExternalLink } from 'lucide-react'
 export default function CreateClassModal({ onClose, onClassCreated }) {
   const [loading, setLoading] = useState(false)
   const { register, handleSubmit, formState: { errors }, reset, watch } = useForm()
@@ -43,7 +43,8 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
           description: data.description,
           startTime: start,
           endTime: end,
-          maxAttendees: parseInt(data.maxAttendees) || 50
+          maxAttendees: parseInt(data.maxAttendees) || 50,
+          customMeetLink: data.customMeetLink
         }),
       })
       const result = await response.json()
@@ -191,6 +192,36 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
               <option value="50">50 students (default)</option>
               <option value="100">100 students</option>
             </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              <ExternalLink className="h-4 w-4 inline mr-1" />
+              Custom Meeting Link (Optional)
+            </label>
+            <input
+              type="url"
+              {...register('customMeetLink')}
+              className="input-field"
+              placeholder="https://meet.google.com/xxx-xxxx-xxx"
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Leave blank to generate a shared link automatically.
+            </p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              <ExternalLink className="h-4 w-4 inline mr-1" />
+              Custom Meeting Link (Optional)
+            </label>
+            <input
+              type="url"
+              {...register('customMeetLink')}
+              className="input-field"
+              placeholder="https://meet.google.com/xxx-xxxx-xxx"
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Leave blank to generate a shared link automatically.
+            </p>
           </div>
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
             <div className="flex items-start">

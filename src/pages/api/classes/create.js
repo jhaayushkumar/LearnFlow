@@ -24,7 +24,7 @@ export default async function handler(req, res) {
     if (!user || user.role !== 'mentor') {
       return res.status(403).json({ success: false, message: 'Only mentors can create classes' })
     }
-    const { title, description, startTime, endTime, maxAttendees } = req.body
+    const { title, description, startTime, endTime, maxAttendees, customMeetLink } = req.body
     if (!title || !startTime || !endTime) {
       return res.status(400).json({ success: false, message: 'Title, start time, and end time are required' })
     }
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
     if (durationHours > 4) {
       return res.status(400).json({ success: false, message: 'Class duration cannot exceed 4 hours' })
     }
-    const meetLink = generateMeetLink()
+    const meetLink = customMeetLink || generateMeetLink()
     const newClass = await Class.create({
       title: title.trim(),
       description: description?.trim(),
