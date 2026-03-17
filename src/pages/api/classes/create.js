@@ -40,6 +40,7 @@ export default async function handler(req, res) {
     let googleEventId = null
     let googleCalendarIntegrated = false
 
+    let calendarError = null
     if (!meetLink && session.accessToken) {
       const calendarResult = await createCalendarEvent(session.accessToken, {
         title,
@@ -52,21 +53,20 @@ export default async function handler(req, res) {
         meetLink = calendarResult.meetLink
         googleEventId = calendarResult.eventId
         googleCalendarIntegrated = true
+      } else {
+        calendarError = calendarResult.error
       }
     }
 
-    // Fallback if calendar fails or no token
+    // Require a meet link
     if (!meetLink) {
-        // We still want a link as per PRD "generate a Google Meet link"
-        // But the PRD says "app calls the Google Calendar API... to generate a Google Meet link"
-        // If it fails, we should probably tell the user or provide a manual way.
-        // For now, I'll keep a simple generate fallback but marked as not integrated.
-        const chars = 'abcdefghijklmnopqrstuvwxyz'
-        const p1 = Array.from({ length: 3 }, () => chars[Math.floor(Math.random() * chars.length)]).join('')
-        const p2 = Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join('')
-        const p3 = Array.from({ length: 3 }, () => chars[Math.floor(Math.random() * chars.length)]).join('')
-        meetLink = `https://meet.google.com/${p1}-${p2}-${p3}`
+        return res.status(400).json({ 
+            success: false, 
+            message: `Could not generate a Google Meet link. ${calendarError || 'No access token available. Please re-login.'}`,
+            error: calendarError
+        })
     }
+    console.log('Class will be created with Meet Link:', meetLink)
 
     const newClass = await Class.create({
       title: title.trim(),
@@ -84,9 +84,10 @@ export default async function handler(req, res) {
 
     res.status(201).json({ 
       success: true, 
-      message: googleCalendarIntegrated ? 'Class scheduled with Google Calendar!' : 'Class scheduled successfully',
+      message: googleCalendarIntegrated ? 'Class scheduled with Google Calendar!' : `Class scheduled (Meet Link Generation failed: ${calendarError || 'No access token'})`,
       class: newClass,
-      googleCalendarIntegrated
+      googleCalendarIntegrated,
+      error: calendarError
     })
   } catch (error) {
     console.error('Error creating class:', error)
