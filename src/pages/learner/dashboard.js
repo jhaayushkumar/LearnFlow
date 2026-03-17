@@ -20,7 +20,9 @@ export default function LearnerDashboard() {
       router.push('/')
       return
     }
-    if (session.user.role !== 'learner') {
+    if (session.user.role === 'learner') {
+      toast.success('Logged in as Learner', { id: 'learner-welcome' })
+    } else {
       router.push('/mentor/dashboard')
       return
     }

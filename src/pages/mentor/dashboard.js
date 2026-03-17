@@ -1,6 +1,7 @@
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
+import { toast } from 'react-hot-toast'
 import Layout from '../../components/Layout'
 import CreateClassModal from '../../components/CreateClassModal'
 import ClassCard from '../../components/ClassCard'
@@ -18,7 +19,9 @@ export default function MentorDashboard() {
       router.push('/')
       return
     }
-    if (session.user.role !== 'mentor') {
+    if (session.user.role === 'mentor') {
+      toast.success('Logged in as Mentor', { id: 'mentor-welcome' })
+    } else {
       router.push('/learner/dashboard')
       return
     }
