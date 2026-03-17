@@ -129,10 +129,10 @@ export default function LearnerDashboard() {
         {}
         <div className="mb-8">
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
               Welcome back, {session?.user?.name}
             </h1>
-            <p className="text-gray-600">Discover and join live classes from amazing mentors</p>
+            <p className="text-gray-600 dark:text-gray-400">Discover and join live classes from amazing mentors</p>
           </div>
           {}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -140,8 +140,8 @@ export default function LearnerDashboard() {
               <div className="flex items-center">
                 <BookOpen className="h-8 w-8 text-primary-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Available Classes</p>
-                  <p className="text-2xl font-bold text-gray-900">{classes.length}</p>
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Available Classes</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{classes.length}</p>
                 </div>
               </div>
             </div>
@@ -149,8 +149,8 @@ export default function LearnerDashboard() {
               <div className="flex items-center">
                 <Star className="h-8 w-8 text-green-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">My Classes</p>
-                  <p className="text-2xl font-bold text-gray-900">{myClasses.length}</p>
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">My Classes</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{myClasses.length}</p>
                 </div>
               </div>
             </div>
@@ -160,8 +160,8 @@ export default function LearnerDashboard() {
                   <div className="h-3 w-3 bg-red-500 rounded-full animate-pulse"></div>
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Live Now</p>
-                  <p className="text-2xl font-bold text-gray-900">{liveClasses.length}</p>
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Live Now</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{liveClasses.length}</p>
                 </div>
               </div>
             </div>
@@ -169,8 +169,8 @@ export default function LearnerDashboard() {
               <div className="flex items-center">
                 <Clock className="h-8 w-8 text-blue-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Upcoming</p>
-                  <p className="text-2xl font-bold text-gray-900">{upcomingClasses.length}</p>
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Upcoming</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{upcomingClasses.length}</p>
                 </div>
               </div>
             </div>
@@ -202,7 +202,7 @@ export default function LearnerDashboard() {
         {/* Search and Filter Controls */}
         <div className="mb-6">
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold text-gray-900">Browse Classes</h2>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Browse Classes</h2>
             {/* Search Bar */}
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -211,7 +211,7 @@ export default function LearnerDashboard() {
                 placeholder="Search classes, mentors..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
               />
             </div>
           </div>
@@ -222,7 +222,7 @@ export default function LearnerDashboard() {
               <select
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
-                className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
               >
                 <option value="all">All Classes ({classes.length})</option>
                 <option value="live">Live Now ({liveClasses.length})</option>
@@ -231,11 +231,11 @@ export default function LearnerDashboard() {
               </select>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-500">Sort by:</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">Sort by:</span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
               >
                 <option value="startTime">Start Time</option>
                 <option value="title">Class Title</option>
@@ -256,7 +256,7 @@ export default function LearnerDashboard() {
         <div className="mb-8">
           {filteredClasses.length > 0 ? (
             <>
-              <div className="mb-4 text-sm text-gray-600">
+              <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
                 Showing {filteredClasses.length} class{filteredClasses.length !== 1 ? 'es' : ''}
                 {searchTerm && ` matching "${searchTerm}"`}
               </div>

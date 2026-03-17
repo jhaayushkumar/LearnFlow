@@ -42,13 +42,13 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
   }
   return (
     <div className={`card transition-all duration-200 hover:shadow-lg ${
-      isLive ? 'border-red-500 bg-red-50' : 
-      isJoined ? 'border-green-500 bg-green-50' : ''
+      isLive ? 'border-red-500 bg-red-50 dark:bg-red-900/10' : 
+      isJoined ? 'border-green-500 bg-green-50 dark:bg-green-900/10' : ''
     }`}>
       <div className="flex justify-between items-start mb-4">
         <div className="flex-1">
           <div className="flex items-start justify-between mb-2">
-            <h3 className="text-lg font-semibold text-gray-900 flex-1 pr-4">
+            <h3 className="text-lg font-semibold text-gray-900 flex-1 pr-4 dark:text-white">
               {classData.title}
             </h3>
             <span className={`text-xs font-medium px-2.5 py-0.5 rounded-full ${timeStatus.color}`}>
@@ -56,41 +56,41 @@ export default function ClassCard({ classData, isMentor = false, isPast = false,
             </span>
           </div>
           {classData.description && (
-            <p className="text-gray-600 text-sm mb-3 line-clamp-2">{classData.description}</p>
+            <p className="text-gray-600 text-sm mb-3 line-clamp-2 dark:text-gray-400">{classData.description}</p>
           )}
         </div>
       </div>
       <div className="space-y-2 mb-4">
-        <div className="flex items-center text-sm text-gray-600">
+        <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
           <Calendar className="h-4 w-4 mr-2 flex-shrink-0" />
           <span>{format(startTime, 'MMM dd, yyyy')}</span>
         </div>
-        <div className="flex items-center text-sm text-gray-600">
+        <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
           <Clock className="h-4 w-4 mr-2 flex-shrink-0" />
           <span>
             {format(startTime, 'h:mm a')} - {format(endTime, 'h:mm a')}
           </span>
         </div>
         {!isMentor && (
-          <div className="flex items-center text-sm text-gray-600">
+          <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
             <Users className="h-4 w-4 mr-2 flex-shrink-0" />
             <span>Mentor: {classData.mentorName}</span>
           </div>
         )}
         {isMentor && (
-          <div className="flex items-center text-sm text-gray-600">
+          <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
             <Users className="h-4 w-4 mr-2 flex-shrink-0" />
             <span>
               {classData.attendees?.length || 0} / {classData.maxAttendees} students
             </span>
           </div>
         )}
-        <div className="flex items-center text-xs text-primary-600 font-mono bg-primary-50 p-2 rounded border border-primary-100 mt-2">
+        <div className="flex items-center text-xs text-primary-600 font-mono bg-primary-50 p-2 rounded border border-primary-100 mt-2 dark:bg-primary-900/10 dark:border-primary-900/20 dark:text-primary-400">
           <ExternalLink className="h-3 w-3 mr-2" />
           <span className="truncate flex-1">{classData.meetLink}</span>
           <button 
             onClick={() => copyToClipboard(classData.meetLink)}
-            className="ml-2 hover:text-primary-800 underline"
+            className="ml-2 hover:text-primary-800 underline dark:hover:text-primary-300"
           >
             Copy
           </button>

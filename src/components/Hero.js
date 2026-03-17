@@ -2,14 +2,14 @@ import { signIn } from 'next-auth/react'
 import { Video, Calendar, Users } from 'lucide-react'
 export default function Hero() {
   return (
-    <div className="bg-gradient-to-br from-primary-50 to-white">
+    <div className="bg-gradient-to-br from-primary-50 to-white transition-colors duration-200 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 dark:text-white">
             Schedule & Join
             <span className="text-primary-600 block">Live Classes</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto dark:text-gray-400">
             A streamlined platform for mentors to schedule live Google Meet classes 
             and learners to join them seamlessly.
           </p>
@@ -26,22 +26,22 @@ export default function Hero() {
               <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Calendar className="h-8 w-8 text-primary-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Easy Scheduling</h3>
-              <p className="text-gray-600">Schedule classes with integrated Google Calendar</p>
+              <h3 className="text-lg font-semibold mb-2 dark:text-white">Easy Scheduling</h3>
+              <p className="text-gray-600 dark:text-gray-400">Schedule classes with integrated Google Calendar</p>
             </div>
             <div className="text-center">
               <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Video className="h-8 w-8 text-primary-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Google Meet Integration</h3>
-              <p className="text-gray-600">Automatic Google Meet links for all classes</p>
+              <h3 className="text-lg font-semibold mb-2 dark:text-white">Google Meet Integration</h3>
+              <p className="text-gray-600 dark:text-gray-400">Automatic Google Meet links for all classes</p>
             </div>
             <div className="text-center">
               <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="h-8 w-8 text-primary-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Role-Based Access</h3>
-              <p className="text-gray-600">Separate dashboards for mentors and learners</p>
+              <h3 className="text-lg font-semibold mb-2 dark:text-white">Role-Based Access</h3>
+              <p className="text-gray-600 dark:text-gray-400">Separate dashboards for mentors and learners</p>
             </div>
           </div>
         </div>
