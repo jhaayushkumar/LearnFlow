@@ -208,21 +208,6 @@ export default function CreateClassModal({ onClose, onClassCreated }) {
               Leave blank to generate a shared link automatically.
             </p>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              <ExternalLink className="h-4 w-4 inline mr-1" />
-              Custom Meeting Link (Optional)
-            </label>
-            <input
-              type="url"
-              {...register('customMeetLink')}
-              className="input-field"
-              placeholder="https://meet.google.com/xxx-xxxx-xxx"
-            />
-            <p className="text-xs text-gray-500 mt-1">
-              Leave blank to generate a shared link automatically.
-            </p>
-          </div>
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
             <div className="flex items-start">
               <Clock className="h-5 w-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" />
