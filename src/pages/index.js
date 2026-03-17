@@ -33,7 +33,7 @@ export default function Home() {
       </Layout>
     )
   }
-  if (session) {
+  if (session && session.user?.role) {
     return null 
   }
   return (
