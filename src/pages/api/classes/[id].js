@@ -3,6 +3,7 @@ import { authOptions } from '../../../lib/auth'
 import connectDB from '../../../lib/mongodb'
 import Class from '../../../models/Class'
 import User from '../../../models/User'
+import { deleteCalendarEvent } from '../../../lib/google-calendar'
 export default async function handler(req, res) {
   const { id } = req.query
   if (req.method === 'DELETE') {
@@ -22,6 +23,9 @@ export default async function handler(req, res) {
       }
       if (classToDelete.mentorId.toString() !== user._id.toString()) {
         return res.status(403).json({ success: false, message: 'You can only delete your own classes' })
+      }
+      if (classToDelete.googleEventId && session.accessToken) {
+        await deleteCalendarEvent(session.accessToken, classToDelete.googleEventId)
       }
       await Class.findByIdAndDelete(id)
       res.status(200).json({ 

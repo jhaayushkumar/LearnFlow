@@ -9,7 +9,9 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       authorization: {
         params: {
-          scope: 'openid email profile' 
+          scope: 'openid email profile https://www.googleapis.com/auth/calendar.events',
+          access_type: 'offline',
+          prompt: 'consent'
         }
       }
     })
@@ -36,6 +38,8 @@ export const authOptions = {
     async jwt({ token, account }) {
       if (account) {
         token.accessToken = account.access_token
+        token.refreshToken = account.refresh_token
+        token.accessTokenExpires = account.expires_at * 1000
       }
       return token
     },
